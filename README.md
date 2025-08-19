@@ -105,7 +105,7 @@ cmake --build build
 
 ## Roadmap
 
-- [x] Basic particle explosion rendering
+- [ ] Basic particle explosion rendering
 - [ ] Interactive parameter menu
 - [ ] Full 3D support
 - [ ] Export images or video of the simulation
@@ -119,7 +119,6 @@ This project is inspired by the beauty of astrophysical phenomena and a passion 
 Special thanks to:
 - The OpenGL community
 - GLFW and GLAD authors
-- [openai/gym](https://github.com/openai/gym) for README inspiration
 
 ---
 
