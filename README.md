@@ -38,7 +38,7 @@ The goal is to provide a simple base to explore physics and real-time graphics r
 
 ## Tech Stack
 
-- **Language**: C++17
+- **Language**: C++23
 - **Rendering**: OpenGL
 - **Windowing**: GLFW
 - **OpenGL Loader**: GLAD or GLEW (choose one)
