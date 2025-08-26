@@ -11,7 +11,10 @@ file(GLOB SRC_FILES src/*.cpp main.cpp)
 add_executable(supernova_simulation ${SRC_FILES})
 
 # Include headers
-target_include_directories(supernova_simulation PRIVATE include)
+target_include_directories(supernova_simulation PRIVATE
+        include
+        external/glm   # Add GLM headers here
+)
 
 # Add GLFW (vendored)
 add_subdirectory(external/glfw)
