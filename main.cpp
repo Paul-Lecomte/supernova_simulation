@@ -1,4 +1,4 @@
-#include <GLFW/glfw3.h>
+#include "external/glfw/include/GLFW/glfw3.h"
 #include "../include/particle.h"
 #include "../include/shader.h"
 
