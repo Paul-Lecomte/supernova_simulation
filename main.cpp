@@ -1,5 +1,6 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include "particle_system.h"
 
 int main() {
     if (!glfwInit()) {
