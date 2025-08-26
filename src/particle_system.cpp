@@ -26,3 +26,21 @@ void ParticleSystem::spawnParticle() {
 
     particles.push_back(p);
 }
+
+
+void ParticleSystem::update(float deltaTime) {
+    for (auto &p : particles) {
+        p.position += p.velocity * deltaTime;
+        p.life -= deltaTime;
+    }
+
+    // Remove dead particles
+    particles.erase(
+        std::remove_if(particles.begin(), particles.end(),
+                       [](Particle &p){ return p.life <= 0.0f; }),
+        particles.end()
+    );
+
+    // Spawn new particles
+    spawnParticle();
+}
