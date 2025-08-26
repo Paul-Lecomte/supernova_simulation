@@ -48,8 +48,10 @@ void ParticleSystem::update(float deltaTime) {
 void ParticleSystem::render() {
     glBegin(GL_POINTS);
     for (auto &p : particles) {
-        glColor3f(p.color.r, p.color.g, p.color.b);
+        glColor4f(p.color.r, p.color.g, p.color.b, p.life);
         glVertex2f(p.position.x, p.position.y);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
     glEnd();
 }
