@@ -20,26 +20,41 @@ void ParticleSystem::spawnParticles(unsigned int count) {
         // Random speed
         float minSpeed = 0.2f;
         float maxSpeed = 1.0f;
-        float speed = minSpeed + (static_cast<float>(rand()) / RAND_MAX) * (maxSpeed - minSpeed);
+        float speed = minSpeed + static_cast<float>(rand()) / RAND_MAX * (maxSpeed - minSpeed);
 
-        // Random angle with slight offset
-        float baseAngle = static_cast<float>(rand()) / RAND_MAX * 2.0f * 3.14159f;
-        float angleOffset = (static_cast<float>(rand()) / RAND_MAX - 0.5f) * 0.4f; // ±0.2 rad
-        float angle = baseAngle + angleOffset;
+        // Random 3D direction (spherical coordinates)
+        float theta = static_cast<float>(rand()) / RAND_MAX * 2.0f * 3.14159f;  // azimuth
+        float phi   = static_cast<float>(rand()) / RAND_MAX * 3.14159f;         // elevation
+        glm::vec3 dir(
+            sin(phi) * cos(theta),
+            sin(phi) * sin(theta),
+            cos(phi)
+        );
+
+        // Slight random offset for filament-like appearance
+        glm::vec3 offset = dir * (static_cast<float>(rand()) / RAND_MAX * 0.2f);
 
         // Random life
         float life = 1.0f + static_cast<float>(rand()) / RAND_MAX * 0.5f; // 1.0–1.5s
 
-        // Randomized color (orange-yellow gradient)
+        // Randomized color (yellow → orange → red gradient)
         glm::vec3 color(
-            0.8f + static_cast<float>(rand()) / RAND_MAX * 0.2f, // red
-            0.3f + static_cast<float>(rand()) / RAND_MAX * 0.2f, // green
-            0.0f                                               // blue
+            1.0f,                              // red
+            0.5f + 0.5f * (life / 1.5f),       // green fades over life
+            0.2f * (1.0f - life / 1.5f)        // blue appears at end
         );
 
         Particle p;
-        p.position = glm::vec2(centerX, centerY);
-        p.velocity = glm::vec2(cos(angle), sin(angle)) * speed;
+        p.position = glm::vec3(centerX, centerY, centerZ) + offset;
+        p.velocity = dir * speed;
+
+        // Add small random turbulence
+        p.velocity += glm::vec3(
+            (static_cast<float>(rand()) / RAND_MAX - 0.5f) * 0.1f,
+            (static_cast<float>(rand()) / RAND_MAX - 0.5f) * 0.1f,
+            (static_cast<float>(rand()) / RAND_MAX - 0.5f) * 0.1f
+        );
+
         p.color = color;
         p.life = life;
 
@@ -50,14 +65,14 @@ void ParticleSystem::spawnParticles(unsigned int count) {
 void ParticleSystem::update(float deltaTime) {
     for (auto &p : particles) {
         // Direction of current movement
-        glm::vec2 dir = glm::normalize(p.velocity);
+        glm::vec3 dir = glm::normalize(p.velocity);
 
         // Outward acceleration (explosion effect)
         float acceleration = 0.4f + static_cast<float>(rand()) / RAND_MAX * 0.2f; // 0.4–0.6
         p.velocity += dir * acceleration * deltaTime;
 
         // Gravity towards or away from center
-        glm::vec2 toCenter = glm::vec2(centerX, centerY) - p.position;
+        glm::vec3 toCenter = glm::vec3(centerX, centerY, centerZ) - p.position;
         float gravityStrength = -0.2f + static_cast<float>(rand()) / RAND_MAX * 0.1f; // -0.2 to -0.1
         p.velocity += toCenter * gravityStrength * deltaTime;
 
@@ -86,7 +101,7 @@ void ParticleSystem::render() {
         // Fade particles as life decreases
         float alpha = p.life;
         glColor4f(p.color.r * alpha, p.color.g * alpha, p.color.b * alpha, alpha);
-        glVertex2f(p.position.x, p.position.y);
+        glVertex3f(p.position.x, p.position.y, p.position.z);
     }
     glEnd();
 }
