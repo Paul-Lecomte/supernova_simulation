@@ -1,13 +1,14 @@
 #include "particle_system.h"
 #include "../external/glm/glm.hpp"
-#include <cstdlib>
+#include <cstdlib>      // for rand()
 #include <cmath>
 #include <GLFW/glfw3.h>
 #include <GL/gl.h>
+#include <algorithm>
 
-// Constructor to initialize the particle system with a maximum number of particles
 ParticleSystem::ParticleSystem(unsigned int maxParticles)
-    : maxParticles(maxParticles) {
+    : maxParticles(maxParticles)
+{
     particles.reserve(maxParticles);
 }
 
@@ -21,12 +22,11 @@ void ParticleSystem::spawnParticle() {
     Particle p;
     p.position = glm::vec2(centerX, centerY);
     p.velocity = glm::vec2(cos(angle), sin(angle)) * speed;
-    p.color = glm::vec3(1.0f, 0.5f, 0.0f); // Orange color
-    p.life = 1.0f; // Particle life in seconds
+    p.color = glm::vec3(1.0f, 0.5f, 0.0f); // orange
+    p.life = 1.0f; // 1 second life
 
     particles.push_back(p);
 }
-
 
 void ParticleSystem::update(float deltaTime) {
     for (auto &p : particles) {
@@ -41,7 +41,7 @@ void ParticleSystem::update(float deltaTime) {
         particles.end()
     );
 
-    // Spawn new particles
+    // spawn new particles automatically
     spawnParticle();
 }
 
