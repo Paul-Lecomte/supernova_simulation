@@ -44,3 +44,12 @@ void ParticleSystem::update(float deltaTime) {
     // Spawn new particles
     spawnParticle();
 }
+
+void ParticleSystem::render() {
+    glBegin(GL_POINTS);
+    for (auto &p : particles) {
+        glColor3f(p.color.r, p.color.g, p.color.b);
+        glVertex2f(p.position.x, p.position.y);
+    }
+    glEnd();
+}
