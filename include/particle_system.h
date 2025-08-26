@@ -8,9 +8,10 @@ class ParticleSystem {
 public:
     ParticleSystem(unsigned int maxParticles);
 
-    void spawnParticle();                  // spawn one particle
+    void spawnParticle();                  // old single-particle spawn
+    void spawnParticles(unsigned int count = 5); // new multi-particle spawn
     void update(float deltaTime);          // update all particles
-    void render();                          // render all particles (OpenGL)
+    void render();                         // render all particles (OpenGL)
 
 private:
     std::vector<Particle> particles;
