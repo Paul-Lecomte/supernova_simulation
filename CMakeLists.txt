@@ -7,16 +7,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Add source files
 file(GLOB SRC_FILES src/*.cpp main.cpp)
 
-# Build your executable
+# Build executable
 add_executable(supernova_simulation ${SRC_FILES})
 
 # Include headers
 target_include_directories(supernova_simulation PRIVATE include)
 
-# Add GLFW (from external folder)
+# Add GLFW (vendored)
 add_subdirectory(external/glfw)
 target_link_libraries(supernova_simulation PRIVATE glfw)
 
-# Find and link OpenGL (system)
+# Find and link OpenGL
 find_package(OpenGL REQUIRED)
 target_link_libraries(supernova_simulation PRIVATE OpenGL::GL)

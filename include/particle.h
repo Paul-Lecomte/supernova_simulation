@@ -1,14 +1,13 @@
-#pragma once
-#include <vector>
+#ifndef PARTICLE_H
+#define PARTICLE_H
+
+#include <glm/glm.hpp>
+
 struct Particle {
-    float x, y, vx, vy;
-    float r, g, b, a;
+    glm::vec2 position;
+    glm::vec2 velocity;
+    glm::vec3 color;
+    float life;
 };
-class ParticleSystem {
-public:
-    ParticleSystem();
-    void update();
-    void render();
-private:
-    std::vector<Particle> particles;
-};
+
+#endif

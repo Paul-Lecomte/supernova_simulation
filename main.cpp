@@ -1,25 +1,27 @@
-#include "external/glfw/include/GLFW/glfw3.h"
-#include "../include/particle.h"
-#include "../include/shader.h"
+#include <GLFW/glfw3.h>
+#include <iostream>
 
 int main() {
-    if (!glfwInit()) return -1;
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Supernova Simulation", nullptr, nullptr);
-    if (!window) { glfwTerminate(); return -1; }
-    glfwMakeContextCurrent(window);
+    if (!glfwInit()) {
+        std::cerr << "Failed to initialize GLFW\n";
+        return -1;
+    }
 
-    // Initialisation des particules et shaders
-    ParticleSystem particles;
-    Shader shader("shaders/vertex.glsl", "shaders/fragment.glsl");
+    GLFWwindow* window = glfwCreateWindow(800, 600, "Supernova Simulation", NULL, NULL);
+    if (!window) {
+        std::cerr << "Failed to create GLFW window\n";
+        glfwTerminate();
+        return -1;
+    }
+
+    glfwMakeContextCurrent(window);
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
-        particles.update();
-        shader.use();
-        particles.render();
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+
     glfwDestroyWindow(window);
     glfwTerminate();
     return 0;
