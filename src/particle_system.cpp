@@ -23,7 +23,7 @@ static GLuint particleTextureId = 0;
 void loadParticleTexture() {
     if (particleTextureId != 0) return;
     particleTextureId = SOIL_load_OGL_texture(
-        "assets/particle.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y
+        "assets/particle2.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y
     );
     glBindTexture(GL_TEXTURE_2D, particleTextureId);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -193,7 +193,7 @@ void ParticleSystem::render() {
     }
 
     glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE); // Additif pour glow
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // Correction ici
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, particleTextureId);
 
