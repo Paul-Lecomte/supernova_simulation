@@ -1,4 +1,5 @@
 // src/particle_system.cpp
+// Simulation d'une supernova en 3D avec OpenGL
 #include <GL/gl.h>
 #include <GL/glext.h>
 #ifndef GL_CLAMP_TO_EDGE
