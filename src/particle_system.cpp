@@ -15,6 +15,7 @@
 #include "../external/soil/include/SOIL/SOIL.h" // Pour le chargement de texture
 
 // --- Bruit simple pour déformations ---
+// Simplex ou Perlin seraient mieux, mais plus complexes à implémenter
 float simpleNoise(float x, float y, float z) {
     return sin(x * 2.1f + y * 1.3f + z * 0.7f);
 }
